@@ -4,17 +4,25 @@
  */
 package Login;
 
+import LienKet.QLMA_QLBAN;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Admin
  */
 public class DangNhap extends javax.swing.JFrame {
-
+    String user1 = "user1";
+    String pass1 = "678";
+    String user2 = "user2";
+    String pass2 = "123";
     /**
      * Creates new form DangNhap
      */
     public DangNhap() {
         initComponents();
+        setTitle("Đăng nhập");
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -29,49 +37,79 @@ public class DangNhap extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtTen = new javax.swing.JTextField();
-        txtPass = new javax.swing.JPasswordField();
+        txtTenDN = new javax.swing.JTextField();
+        txtPassword = new javax.swing.JPasswordField();
         btnDangNhap = new javax.swing.JButton();
         btnThoat = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
+        txtEmail = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Đăng Nhập ");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 30, -1, -1));
+        jLabel1.setForeground(new java.awt.Color(0, 51, 51));
+        jLabel1.setText("ĐĂNG NHẬP ");
+        jLabel1.setToolTipText("");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, -1, -1));
 
         jLabel2.setText("Tên đăng nhập ");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
 
         jLabel3.setText("Mật khẩu ");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, -1, -1));
-        getContentPane().add(txtTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 90, 233, -1));
-
-        txtPass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPassActionPerformed(evt);
-            }
-        });
-        getContentPane().add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 178, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, -1));
+        getContentPane().add(txtTenDN, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, 240, -1));
+        getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, 170, -1));
 
         btnDangNhap.setText("Đăng nhập");
-        getContentPane().add(btnDangNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, -1, -1));
+        btnDangNhap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDangNhapActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnDangNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 180, -1, -1));
 
         btnThoat.setText("Thoát");
-        getContentPane().add(btnThoat, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 180, -1, -1));
+        btnThoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoatActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnThoat, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 180, -1, -1));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/DN.jpg"))); // NOI18N
-        jLabel4.setText("jLabel4");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 520, 260));
+        txtEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/DN.jpg"))); // NOI18N
+        txtEmail.setText("jLabel4");
+        getContentPane().add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 520, 330));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPassActionPerformed
+    private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
+        if(checkForm()){
+            String username = txtTenDN.getText();
+            String password = new String(txtPassword.getPassword());
+            if(username.equals(user1) && password.equals(pass1)){
+                JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
+                QLMA_QLBAN main = new QLMA_QLBAN();
+                main.setVisible(true);
+                this.dispose();
+                return;
+            }else{
+                JOptionPane.showMessageDialog(this, "Đăng nhập thất bại");
+            }
+            if (username.equals(user2) && password.equals(pass2)) {
+                JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
+                return;
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Đăng nhập thất bại");
+            }
+            
+        }
+    }//GEN-LAST:event_btnDangNhapActionPerformed
+
+    private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
+                System.exit(0);
+    }//GEN-LAST:event_btnThoatActionPerformed
 
     /**
      * @param args the command line arguments
@@ -114,8 +152,25 @@ public class DangNhap extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JPasswordField txtPass;
-    private javax.swing.JTextField txtTen;
+    private javax.swing.JLabel txtEmail;
+    private javax.swing.JPasswordField txtPassword;
+    private javax.swing.JTextField txtTenDN;
     // End of variables declaration//GEN-END:variables
+    public boolean checkForm(){
+        String passWord = new String(txtPassword.getPassword());
+        if(txtTenDN.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "Tên đăng nhập đang bỏ trống");
+            return false;
+        }
+        if (txtEmail.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Email đang bỏ trống");
+            return false;
+        }
+        if(passWord.equals("")){
+            JOptionPane.showMessageDialog(this, "Mật khẩu đang bỏ trống");
+            return false;
+        }
+        return true;
+        
+    }
 }

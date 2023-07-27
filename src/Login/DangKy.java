@@ -4,12 +4,16 @@
  */
 package Login;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Admin
  */
 public class DangKy extends javax.swing.JFrame {
-
+    private static final String P_EMAIL = "^([a-z0-9\\.-]+)@([\\da-z\\.-]+)\\.([a-z.]{2,6})";
     /**
      * Creates new form DangKy
      */
@@ -79,10 +83,20 @@ public class DangKy extends javax.swing.JFrame {
 
         btnDangKy.setBackground(new java.awt.Color(204, 255, 204));
         btnDangKy.setText("Đăng Ký");
+        btnDangKy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDangKyActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnDangKy, new org.netbeans.lib.awtextra.AbsoluteConstraints(279, 239, 120, 31));
 
         btnThoat.setBackground(new java.awt.Color(204, 255, 204));
         btnThoat.setText("Thoát");
+        btnThoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoatActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnThoat, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 240, 110, 31));
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/background_DangKy.jpg"))); // NOI18N
@@ -95,6 +109,16 @@ public class DangKy extends javax.swing.JFrame {
     private void txtHotenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHotenActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtHotenActionPerformed
+
+    private void btnDangKyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangKyActionPerformed
+        if(checkForm()){
+            JOptionPane.showMessageDialog(this, "Đăng ký thành công");
+        }
+    }//GEN-LAST:event_btnDangKyActionPerformed
+
+    private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnThoatActionPerformed
 
     /**
      * @param args the command line arguments
@@ -145,4 +169,35 @@ public class DangKy extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtMatKhau;
     private javax.swing.JTextField txtSDT;
     // End of variables declaration//GEN-END:variables
+    public boolean checkForm(){
+        String pass = new String(txtMatKhau.getPassword());
+        if(txtHoten.getText().equals("")){
+             JOptionPane.showMessageDialog(this, "Họ tên đang bỏ trống");
+             return false;
+        } 
+        if (pass.equals("")) {
+            JOptionPane.showMessageDialog(this, "Mật khẩu đang bỏ trống");
+            return false;
+        }
+        if(txtSDT.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "Số điện  đang bỏ trống");
+            return false;                
+        }
+        try {
+            Integer.parseInt(txtSDT.getText());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Số điện thoại phải là sô", "Eror", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (txtEmail.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Email đang bỏ trống");
+            return false;
+        }
+        Matcher matcher = Pattern.compile(P_EMAIL).matcher(txtEmail.getText());
+        if (!matcher.matches()) {
+            JOptionPane.showMessageDialog(this, "Email sai định dạng");
+            return false;
+        }
+        return true;
+    }
 }
