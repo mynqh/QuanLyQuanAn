@@ -93,17 +93,16 @@ public class DangNhap extends javax.swing.JFrame {
                 main.setVisible(true);
                 this.dispose();
                 return;
-            }else{
-                JOptionPane.showMessageDialog(this, "Đăng nhập thất bại");
             }
-            if (username.equals(user2) && password.equals(pass2)) {
+            else if (username.equals(user2) && password.equals(pass2)) {
                 JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
                 return;
-
-            } else {
+            } 
+            else{
                 JOptionPane.showMessageDialog(this, "Đăng nhập thất bại");
+                return;
             }
-            
+  
         }
     }//GEN-LAST:event_btnDangNhapActionPerformed
 
