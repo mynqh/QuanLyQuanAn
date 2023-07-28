@@ -15,6 +15,7 @@ public class QuanLyMonAn extends javax.swing.JFrame {
      */
     public QuanLyMonAn() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

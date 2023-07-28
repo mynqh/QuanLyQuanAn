@@ -6,6 +6,8 @@ package Login;
 
 import LienKet.QLMA_QLBAN;
 import javax.swing.JOptionPane;
+import quanlyquanan.QuanLyBan;
+import quanlyquanan.QuanLyMonAn;
 
 /**
  *
@@ -89,20 +91,23 @@ public class DangNhap extends javax.swing.JFrame {
             String password = new String(txtPassword.getPassword());
             if(username.equals(user1) && password.equals(pass1)){
                 JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
-                QLMA_QLBAN main = new QLMA_QLBAN();
+                QuanLyMonAn main = new QuanLyMonAn();
                 main.setVisible(true);
                 this.dispose();
                 return;
             }
             else if (username.equals(user2) && password.equals(pass2)) {
                 JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
+                QuanLyBan main = new QuanLyBan();
+                main.setVisible(true);
+                this.dispose();             
                 return;
             } 
             else{
                 JOptionPane.showMessageDialog(this, "Đăng nhập thất bại");
                 return;
             }
-  
+ 
         }
     }//GEN-LAST:event_btnDangNhapActionPerformed
 

@@ -15,6 +15,7 @@ public class QuanLyBan extends javax.swing.JFrame {
      */
     public QuanLyBan() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
