@@ -4,17 +4,33 @@
  */
 package quanlyquanan;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
+import model.DatabaseHelper;
+
 /**
  *
  * @author Admin
  */
 public class QuanLyHDCT extends javax.swing.JFrame {
 
+    PreparedStatement stmt = null;
+    Connection con = null;
+    Statement st = null;
+    ResultSet rs = null;
+    String[] cols = {"Mã hóa đơn chi tiết","Mã hóa đơn","Mã món", "Tên món","Số lượng", "Giá"};
+    DefaultTableModel model = new DefaultTableModel(cols, 0);
     /**
      * Creates new form QuanLyHDCT
      */
     public QuanLyHDCT() {
         initComponents();
+        setLocationRelativeTo(null);
+        LoadDaTaToTabel();
     }
 
     /**
@@ -37,35 +53,41 @@ public class QuanLyHDCT extends javax.swing.JFrame {
         txtGia = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblBangChiTiet = new javax.swing.JTable();
+        jLabel7 = new javax.swing.JLabel();
+        txtMaHDCT = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        txtMaHD = new javax.swing.JTextField();
+        btnThoat = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(102, 102, 0));
         jLabel1.setText("HÓA ĐƠN CHI TIẾT");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, 229, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 229, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Mã món:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 80, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Tên món:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 120, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 170, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("Số lượng:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 160, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setText("Giá:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 198, 62, -1));
-        getContentPane().add(txtMaMon, new org.netbeans.lib.awtextra.AbsoluteConstraints(114, 80, 282, -1));
-        getContentPane().add(txtTenMon, new org.netbeans.lib.awtextra.AbsoluteConstraints(114, 120, 282, -1));
-        getContentPane().add(txtSoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(114, 158, 282, -1));
-        getContentPane().add(txtGia, new org.netbeans.lib.awtextra.AbsoluteConstraints(114, 198, 282, -1));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 270, 62, -1));
+        getContentPane().add(txtMaMon, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, 340, -1));
+        getContentPane().add(txtTenMon, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 170, 340, -1));
+        getContentPane().add(txtSoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, 340, -1));
+        getContentPane().add(txtGia, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 260, 340, -1));
 
         tblBangChiTiet.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -78,15 +100,53 @@ public class QuanLyHDCT extends javax.swing.JFrame {
                 "Mã", "Tên món", "Số lượng ", "Giá"
             }
         ));
+        tblBangChiTiet.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblBangChiTietMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblBangChiTiet);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 248, 425, 180));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 560, 220));
+
+        jLabel7.setText("Mã hóa đơn chi tiết");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, 140, -1));
+        getContentPane().add(txtMaHDCT, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, 260, -1));
+
+        jLabel8.setText("Mã hóa đơn ");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 90, -1, -1));
+        getContentPane().add(txtMaHD, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, 260, -1));
+
+        btnThoat.setText("Thoát");
+        btnThoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoatActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnThoat, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 10, -1, -1));
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/NenChiTiet.jpg"))); // NOI18N
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 500));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 570));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tblBangChiTietMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBangChiTietMouseClicked
+               int row = tblBangChiTiet.getSelectedRow();
+        txtMaHDCT.setText(tblBangChiTiet.getValueAt(row, 0).toString());
+        txtMaHD.setText(tblBangChiTiet.getValueAt(row, 1).toString());
+        txtMaMon.setText(tblBangChiTiet.getValueAt(row, 2).toString());
+        txtTenMon.setText(tblBangChiTiet.getValueAt(row, 3).toString());
+        txtSoLuong.setText(tblBangChiTiet.getValueAt(row, 4).toString());
+        txtGia.setText(tblBangChiTiet.getValueAt(row, 5).toString());
+
+    }//GEN-LAST:event_tblBangChiTietMouseClicked
+
+    private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
+        QuanLyHoaDon main = new QuanLyHoaDon();
+        main.show();;
+        this.dispose();
+    }//GEN-LAST:event_btnThoatActionPerformed
 
     /**
      * @param args the command line arguments
@@ -124,17 +184,47 @@ public class QuanLyHDCT extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnThoat;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblBangChiTiet;
     private javax.swing.JTextField txtGia;
+    private javax.swing.JTextField txtMaHD;
+    private javax.swing.JTextField txtMaHDCT;
     private javax.swing.JTextField txtMaMon;
     private javax.swing.JTextField txtSoLuong;
     private javax.swing.JTextField txtTenMon;
     // End of variables declaration//GEN-END:variables
+        public void LoadDaTaToTabel() {
+        try {
+
+            con = DatabaseHelper.getconnecDb();
+            st = con.createStatement();
+            System.out.println("Kết nối thành công");
+            String sql = "select * from HOADONCHITIET A inner join HOADON B \n"
+                    + "on A.MAHD = B.MAHD";
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                Vector row = new Vector();
+                row.add(rs.getString(1));
+                row.add(rs.getString(2));
+                row.add(rs.getString(3));
+                row.add(rs.getString(4));
+                row.add(rs.getString(9));
+                row.add(rs.getDouble(5));
+                model.addRow(row);
+            }
+            tblBangChiTiet.setModel(model);
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }    
 }

@@ -7,9 +7,12 @@ package quanlyquanan;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.Bidi;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.DatabaseHelper;
@@ -24,7 +27,7 @@ public class QuanLyHoaDon extends javax.swing.JFrame {
     Connection con = null;
     Statement st = null;
     ResultSet rs = null;
-    String[] cols = {"Mã hóa đơn", "Tên món", "Mã món", "Số lượng", "Giá", "Mã bàn", "Mã nhân viên"};
+    String[] cols = {"Mã hóa đơn", "Tên món", "Mã món", "Số lượng", "Giá", "Mã bàn", "Mã nhân viên","Tổng Tiền"};
     DefaultTableModel model = new DefaultTableModel(cols, 0);
 
     /**
@@ -118,6 +121,12 @@ public class QuanLyHoaDon extends javax.swing.JFrame {
         getContentPane().add(txtMaban, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 100, 220, 30));
         getContentPane().add(txtGia, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 210, 220, 30));
         getContentPane().add(txtManv, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 140, 220, 30));
+
+        txtTongtien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTongtienActionPerformed(evt);
+            }
+        });
         getContentPane().add(txtTongtien, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 200, 220, 30));
 
         tblBangHD.setModel(new javax.swing.table.DefaultTableModel(
@@ -173,6 +182,11 @@ public class QuanLyHoaDon extends javax.swing.JFrame {
         btnXemCT.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
         btnXemCT.setForeground(new java.awt.Color(255, 51, 51));
         btnXemCT.setText("Xem chi tiết");
+        btnXemCT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXemCTActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnXemCT, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 260, 175, -1));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -199,6 +213,7 @@ public class QuanLyHoaDon extends javax.swing.JFrame {
         txtGia.setText(tblBangHD.getValueAt(row, 3).toString());
         txtMaban.setText(tblBangHD.getValueAt(row, 5).toString());
         txtManv.setText(tblBangHD.getValueAt(row, 6).toString());
+         txtTongtien.setText(tblBangHD.getValueAt(row, 7).toString());
     }//GEN-LAST:event_tblBangHDMouseClicked
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
@@ -212,6 +227,16 @@ public class QuanLyHoaDon extends javax.swing.JFrame {
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         xoaHoadon();
     }//GEN-LAST:event_btnXoaActionPerformed
+
+    private void txtTongtienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTongtienActionPerformed
+
+    }//GEN-LAST:event_txtTongtienActionPerformed
+
+    private void btnXemCTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemCTActionPerformed
+       QuanLyHDCT main = new QuanLyHDCT();
+       main.show();;
+       this.dispose();
+    }//GEN-LAST:event_btnXemCTActionPerformed
 
     /**
      * @param args the command line arguments
@@ -281,9 +306,8 @@ public class QuanLyHoaDon extends javax.swing.JFrame {
             con = DatabaseHelper.getconnecDb();
             st = con.createStatement();
             System.out.println("Kết nối thành công");
-            String sql = "select * from HOADON ";
+            String sql = "select *,SOLUONG * GIAMON AS TONGTIEN from HOADON";
             rs = st.executeQuery(sql);
-
             while (rs.next()) {
                 Vector row = new Vector();
                 row.add(rs.getString(1));
@@ -293,6 +317,7 @@ public class QuanLyHoaDon extends javax.swing.JFrame {
                 row.add(rs.getString(5));
                 row.add(rs.getString(6));
                 row.add(rs.getString(7));
+                row.add(rs.getString(8));
                 model.addRow(row);
             }
             tblBangHD.setModel(model);
@@ -302,16 +327,30 @@ public class QuanLyHoaDon extends javax.swing.JFrame {
         }
     }
 
-    public void tongThanhTien() {
-        int gia = Integer.parseInt(txtGia.getText());
-        int soluong = Integer.parseInt(txtSoluong.getText());
-        txtTongtien.setText(String.valueOf(gia * soluong));
-    }
-
-    public boolean validateFo() {
+    public boolean validateForm() {
         if (txtMahd.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Chưa nhập mã hóa đơn");
+            JOptionPane.showMessageDialog(this, "Mã không được bỏ trống", "Chu y", 1);
+            txtMahd.requestFocus();
             return false;
+        } else {
+            try {
+                con = DatabaseHelper.getconnecDb();
+                System.out.println("Kết nối thành công");
+                String SQL = "select * from NHANVIEN where manv=?";
+                stmt = con.prepareStatement(SQL);
+                stmt.setString(1, txtMahd.getText());
+                rs = stmt.executeQuery();
+                
+                if (rs.isBeforeFirst() == false) {
+                    //chưa có mã
+                    stmt.execute();
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "Mã đã tồn tại");
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            }
+
         }
         if (txtTenmon.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Chưa nhập họ tên món ăn");
@@ -342,7 +381,7 @@ public class QuanLyHoaDon extends javax.swing.JFrame {
 
     public void themHoadon() {
         int rs = 0;
-        if (validateFo()) {
+        if (validateForm()) {
             try {
 
                 con = DatabaseHelper.getconnecDb();
@@ -356,7 +395,6 @@ public class QuanLyHoaDon extends javax.swing.JFrame {
                 stmt.setString(5, txtGia.getText());
                 stmt.setString(6, txtMaban.getText());
                 stmt.setString(7, txtManv.getText());
-                tongThanhTien();
                 rs = stmt.executeUpdate();
                 con.close();
                 if (rs > 0) {
