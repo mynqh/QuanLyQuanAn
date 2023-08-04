@@ -8,9 +8,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.DatabaseHelper;
@@ -358,8 +361,28 @@ public class QuanLyMonAn extends javax.swing.JFrame {
 
     public boolean checkForm() {
         if (txtMamon.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Mã món ăn đang bỏ trống");
+            JOptionPane.showMessageDialog(this, "Mã không được bỏ trống", "Chu y", 1);
+            txtMamon.requestFocus();
             return false;
+        } else {
+            try {
+                con = DatabaseHelper.getconnecDb();
+                System.out.println("Kết nối thành công");
+                String SQL = "select * from MONAN where MAMON=?";
+                stmt = con.prepareStatement(SQL);
+                stmt.setString(1, txtMamon.getText());
+                rs = stmt.executeQuery();
+                
+                if (rs.isBeforeFirst() == false) {
+                    //chưa có mã
+                    stmt.execute();
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "Mã đã tồn tại");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(QuanLyNhanVien.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
         if (txtMaBan.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Mã bàn đang bỏ trống");

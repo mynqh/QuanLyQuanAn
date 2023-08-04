@@ -8,6 +8,7 @@ import Class.Clock;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 import javax.swing.JOptionPane;
@@ -304,8 +305,28 @@ public class QuanLyBan extends javax.swing.JFrame {
     }
     public boolean checkForm(){
         if (txtMaBan.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Mã bàn đang bỏ trống");
+            JOptionPane.showMessageDialog(this, "Mã không được bỏ trống", "Chu y", 1);
+            txtMaBan.requestFocus();
             return false;
+        } else {
+            try {
+                con = DatabaseHelper.getconnecDb();
+                System.out.println("Kết nối thành công");
+                String SQL = "select * from BAN where Maban=?";
+                stmt = con.prepareStatement(SQL);
+                stmt.setString(1, txtMaBan.getText());
+                rs = stmt.executeQuery();
+                
+                if (rs.isBeforeFirst() == false) {
+                    //chưa có mã
+                    stmt.execute();
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "Mã đã tồn tại");
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            }
+
         }
         if (txtSoLuong.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Số lượng đang bỏ trống");

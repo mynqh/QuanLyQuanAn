@@ -67,7 +67,6 @@ public class QuanLyHoaDon extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblBangHD = new javax.swing.JTable();
         btnThem = new javax.swing.JButton();
-        btnSua = new javax.swing.JButton();
         btnXoa = new javax.swing.JButton();
         btnXemCT = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
@@ -157,17 +156,7 @@ public class QuanLyHoaDon extends javax.swing.JFrame {
                 btnThemActionPerformed(evt);
             }
         });
-        getContentPane().add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 88, -1));
-
-        btnSua.setBackground(new java.awt.Color(204, 255, 204));
-        btnSua.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnSua.setText("Sửa");
-        btnSua.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSuaActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, 87, -1));
+        getContentPane().add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 270, 88, -1));
 
         btnXoa.setBackground(new java.awt.Color(204, 255, 204));
         btnXoa.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -177,7 +166,7 @@ public class QuanLyHoaDon extends javax.swing.JFrame {
                 btnXoaActionPerformed(evt);
             }
         });
-        getContentPane().add(btnXoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 270, 91, -1));
+        getContentPane().add(btnXoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 270, 91, -1));
 
         btnXemCT.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
         btnXemCT.setForeground(new java.awt.Color(255, 51, 51));
@@ -187,7 +176,7 @@ public class QuanLyHoaDon extends javax.swing.JFrame {
                 btnXemCTActionPerformed(evt);
             }
         });
-        getContentPane().add(btnXemCT, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 260, 175, -1));
+        getContentPane().add(btnXemCT, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 270, 175, -1));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel8.setText("Mã món:");
@@ -219,10 +208,6 @@ public class QuanLyHoaDon extends javax.swing.JFrame {
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         themHoadon();
     }//GEN-LAST:event_btnThemActionPerformed
-
-    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-
-    }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         xoaHoadon();
@@ -274,7 +259,6 @@ public class QuanLyHoaDon extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnXemCT;
     private javax.swing.JButton btnXoa;
@@ -336,7 +320,7 @@ public class QuanLyHoaDon extends javax.swing.JFrame {
             try {
                 con = DatabaseHelper.getconnecDb();
                 System.out.println("Kết nối thành công");
-                String SQL = "select * from NHANVIEN where manv=?";
+                String SQL = "select * from HOADON where MAHD=?";
                 stmt = con.prepareStatement(SQL);
                 stmt.setString(1, txtMahd.getText());
                 rs = stmt.executeQuery();

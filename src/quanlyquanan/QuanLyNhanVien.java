@@ -10,9 +10,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.DatabaseHelper;
@@ -353,9 +356,28 @@ public class QuanLyNhanVien extends javax.swing.JFrame {
         }       
     }
     public boolean checkForm(){
-        if(txtMaNV.getText().equals("")){
-            JOptionPane.showMessageDialog(this, "Mã nhân viên đang bỏ trống");
+        if (txtMaNV.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Mã không được bỏ trống", "Chu y", 1);
+            txtMaNV.requestFocus();
             return false;
+        } else {
+            try {
+                con = DatabaseHelper.getconnecDb();
+                System.out.println("Kết nối thành công");
+                String SQL = "select * from NHANVIEN where manv=?";
+                stmt = con.prepareStatement(SQL);
+                stmt.setString(1, txtMaNV.getText());
+                rs = stmt.executeQuery();
+                
+                if (rs.isBeforeFirst() == false) {
+                    //chưa có mã
+                    stmt.execute();
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "Mã đã tồn tại");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(QuanLyNhanVien.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         if (txtTenNV.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Tên nhân viên đang bỏ trống");
