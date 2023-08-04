@@ -19,12 +19,14 @@ import model.DatabaseHelper;
  * @author Admin
  */
 public class QuanLyHoaDon extends javax.swing.JFrame {
+
     PreparedStatement stmt = null;
     Connection con = null;
     Statement st = null;
     ResultSet rs = null;
-    String[] cols = {"Mã hóa đơn","Tên món","Mã món","Số lượng","Giá","Mã bàn","Mã nhân viên"};
+    String[] cols = {"Mã hóa đơn", "Tên món", "Mã món", "Số lượng", "Giá", "Mã bàn", "Mã nhân viên"};
     DefaultTableModel model = new DefaultTableModel(cols, 0);
+
     /**
      * Creates new form QuanLyHoaDon
      */
@@ -208,7 +210,7 @@ public class QuanLyHoaDon extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-xoaHoadon();
+        xoaHoadon();
     }//GEN-LAST:event_btnXoaActionPerformed
 
     /**
@@ -272,17 +274,17 @@ xoaHoadon();
     private javax.swing.JTextField txtTenmon;
     private javax.swing.JTextField txtTongtien;
     // End of variables declaration//GEN-END:variables
-        public void LoadDaTaToTabel(){
-          model.setRowCount(0);
+        public void LoadDaTaToTabel() {
+        model.setRowCount(0);
         try {
-            
-             con = DatabaseHelper.getconnecDb();
-             st = con.createStatement();
-             System.out.println("Kết nối thành công");
-             String sql = "select * from HOADON ";
-             rs = st.executeQuery(sql);
-         
-                 while(rs.next()){
+
+            con = DatabaseHelper.getconnecDb();
+            st = con.createStatement();
+            System.out.println("Kết nối thành công");
+            String sql = "select * from HOADON ";
+            rs = st.executeQuery(sql);
+
+            while (rs.next()) {
                 Vector row = new Vector();
                 row.add(rs.getString(1));
                 row.add(rs.getString(2));
@@ -295,95 +297,98 @@ xoaHoadon();
             }
             tblBangHD.setModel(model);
             con.close();
-         } catch (Exception e) {
-             System.out.println(e);
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }
+
     public void tongThanhTien() {
         int gia = Integer.parseInt(txtGia.getText());
         int soluong = Integer.parseInt(txtSoluong.getText());
         txtTongtien.setText(String.valueOf(gia * soluong));
     }
-        public boolean validateFo(){
-        if(txtMahd.getText().equals("")){
-            JOptionPane.showMessageDialog(this,"Chưa nhập mã hóa đơn");
+
+    public boolean validateFo() {
+        if (txtMahd.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Chưa nhập mã hóa đơn");
             return false;
         }
-        if(txtTenmon.getText().equals("")){
-            JOptionPane.showMessageDialog(this,"Chưa nhập họ tên món ăn");
+        if (txtTenmon.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Chưa nhập họ tên món ăn");
             return false;
         }
-        if(txtMamon.getText().equals("")){
-            JOptionPane.showMessageDialog(this,"Chưa nhập mã món ăn");
+        if (txtMamon.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Chưa nhập mã món ăn");
             return false;
         }
-        if(txtSoluong.getText().equals("")){
-            JOptionPane.showMessageDialog(this,"Chưa nhập số lượng");
+        if (txtSoluong.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Chưa nhập số lượng");
             return false;
         }
-        if(txtGia.getText().equals("")){
-            JOptionPane.showMessageDialog(this,"Chưa nhập giá");
+        if (txtGia.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Chưa nhập giá");
             return false;
         }
-        if(txtMaban.getText().equals("")){
-            JOptionPane.showMessageDialog(this,"Chưa nhập mã bàn");
+        if (txtMaban.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Chưa nhập mã bàn");
             return false;
         }
-        if(txtManv.getText().equals("")){
-            JOptionPane.showMessageDialog(this,"Chưa nhập mã nhân viên");
+        if (txtManv.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Chưa nhập mã nhân viên");
             return false;
         }
         return true;
     }
-        
-    public void themHoadon(){
+
+    public void themHoadon() {
         int rs = 0;
-        if(validateFo()){
+        if (validateFo()) {
             try {
-            
-             con = DatabaseHelper.getconnecDb();
-             System.out.println("Kết nối thành công");
+
+                con = DatabaseHelper.getconnecDb();
+                System.out.println("Kết nối thành công");
                 String sql = "insert into HOADON values(?,?,?,?,?,?,?)";
                 stmt = con.prepareStatement(sql);
                 stmt.setString(1, txtMahd.getText());
                 stmt.setString(2, txtTenmon.getText());
                 stmt.setString(3, txtMamon.getText());
                 stmt.setString(4, txtSoluong.getText());
-                stmt.setString(5,txtGia.getText());
+                stmt.setString(5, txtGia.getText());
                 stmt.setString(6, txtMaban.getText());
                 stmt.setString(7, txtManv.getText());
                 tongThanhTien();
-                rs = stmt.executeUpdate(); 
+                rs = stmt.executeUpdate();
                 con.close();
-            if(rs > 0){
-                JOptionPane.showMessageDialog(this, "Thêm thành công");
-                LoadDaTaToTabel();
-            }else{
-                JOptionPane.showMessageDialog(this, "Thêm không thành công");
-            }
-                
+                if (rs > 0) {
+                    JOptionPane.showMessageDialog(this, "Thêm thành công");
+                    LoadDaTaToTabel();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Thêm không thành công");
+                }
+
             } catch (Exception e) {
-             System.out.println(e);
-             }
+                System.out.println(e);
+            }
         }
     }
-        public void xoaHoadon(){
-            int rs = 0;
+
+    public void xoaHoadon() {
+        int rs = 0;
         try {
-                con = DatabaseHelper.getconnecDb();
-                String sql = "delete from HOADON where MAHD=?";
-                stmt = con.prepareStatement(sql);
-                stmt.setString(1, txtMahd.getText());
-                rs = stmt.executeUpdate(); 
-                con.close();
-            if(rs > 0){
+            con = DatabaseHelper.getconnecDb();
+            String sql = "delete from HOADON where MAHD=?";
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, txtMahd.getText());
+            rs = stmt.executeUpdate();
+            con.close();
+            if (rs > 0) {
                 JOptionPane.showMessageDialog(this, "Xóa thành công");
                 LoadDaTaToTabel();
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(this, "Xóa không thành công");
             }
         } catch (Exception e) {
-             System.out.println(e);
-             }
+            System.out.println(e);
+        }
     }
 }

@@ -14,11 +14,13 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.DatabaseHelper;
+
 /**
  *
  * @author Admin
  */
 public class QuanLyMonAn extends javax.swing.JFrame {
+
     PreparedStatement stmt = null;
     Connection con = null;
     Statement st = null;
@@ -172,8 +174,8 @@ public class QuanLyMonAn extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        if(checkForm()){
-                    ThemMonAn();
+        if (checkForm()) {
+            ThemMonAn();
         }
     }//GEN-LAST:event_btnThemActionPerformed
 
@@ -187,7 +189,7 @@ public class QuanLyMonAn extends javax.swing.JFrame {
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
 
-            XoaMonAn();        
+        XoaMonAn();
     }//GEN-LAST:event_btnXoaActionPerformed
 
     /**
@@ -247,19 +249,19 @@ public class QuanLyMonAn extends javax.swing.JFrame {
     private javax.swing.JTextField txtSoluong;
     private javax.swing.JTextField txtTenMon;
     // End of variables declaration//GEN-END:variables
-    public void LoadDaTaToTabel(){
-                 model.setRowCount(0);
+    public void LoadDaTaToTabel() {
+        model.setRowCount(0);
         try {
-            
-             con = DatabaseHelper.getconnecDb();
-             st = con.createStatement();
-             System.out.println("Kết nối thành công");
+
+            con = DatabaseHelper.getconnecDb();
+            st = con.createStatement();
+            System.out.println("Kết nối thành công");
             String sql = "select * from MONAN A\n"
                     + "inner join  BAN B \n"
                     + "on A.MABAN = B.MABAN";
-             rs = st.executeQuery(sql);
-         
-                 while(rs.next()){
+            rs = st.executeQuery(sql);
+
+            while (rs.next()) {
                 Vector row = new Vector();
                 row.add(rs.getString(1));
                 row.add(rs.getString(2));
@@ -271,43 +273,46 @@ public class QuanLyMonAn extends javax.swing.JFrame {
             }
             tblBangMon.setModel(model);
             con.close();
-         } catch (Exception e) {
-             System.out.println(e);
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }
-        public void Display(){
+
+    public void Display() {
         int row = tblBangMon.getSelectedRow();
-        txtMamon.setText(tblBangMon.getValueAt(row, 0).toString());     
+        txtMamon.setText(tblBangMon.getValueAt(row, 0).toString());
         txtTenMon.setText(tblBangMon.getValueAt(row, 1).toString());
-        txtSoluong.setText(tblBangMon.getValueAt(row, 2).toString());
-        txtGia.setText(tblBangMon.getValueAt(row, 3).toString());
+        txtSoluong.setText(tblBangMon.getValueAt(row, 3).toString());
+        txtGia.setText(tblBangMon.getValueAt(row, 2).toString());
         txtDanhGia.setText(tblBangMon.getValueAt(row, 4).toString());
         txtMaBan.setText(tblBangMon.getValueAt(row, 5).toString());
-        
+
     }
-    public void ThemMonAn(){
+
+    public void ThemMonAn() {
         int rs = 0;
         try {
             con = DatabaseHelper.getconnecDb();
             String sql = "insert into MONAN values(?,?,?,?,?,?)";
             stmt = con.prepareStatement(sql);
-            stmt.setString(1,txtMamon.getText());
-            stmt.setString(2,txtTenMon.getText());
-            stmt.setDouble(3,Double.parseDouble(txtGia.getText()));
-            stmt.setInt(4,Integer.parseInt(txtSoluong.getText()));           
-            stmt.setString(5,txtDanhGia.getText());
+            stmt.setString(1, txtMamon.getText());
+            stmt.setString(2, txtTenMon.getText());
+            stmt.setDouble(3, Double.parseDouble(txtGia.getText()));
+            stmt.setInt(4, Integer.parseInt(txtSoluong.getText()));
+            stmt.setString(5, txtDanhGia.getText());
             stmt.setString(6, txtMaBan.getText());
-            rs = stmt.executeUpdate(); 
-            if(rs > 0){
+            rs = stmt.executeUpdate();
+            if (rs > 0) {
                 JOptionPane.showMessageDialog(this, "Thêm thành công");
                 LoadDaTaToTabel();
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(this, "Thêm không thành công");
             }
         } catch (Exception e) {
-                System.out.println(e);
+            System.out.println(e);
         }
     }
+
     public void SuaMonAn() {
         int rs = 0;
         try {
@@ -316,10 +321,10 @@ public class QuanLyMonAn extends javax.swing.JFrame {
             stmt = con.prepareStatement(sql);
             stmt.setString(6, txtMamon.getText());
             stmt.setString(1, txtTenMon.getText());
-            stmt.setDouble(2,Double.parseDouble(txtGia.getText()));
-            stmt.setInt(3,Integer.parseInt(txtSoluong.getText()));
+            stmt.setDouble(2, Double.parseDouble(txtGia.getText()));
+            stmt.setInt(3, Integer.parseInt(txtSoluong.getText()));
             stmt.setString(4, txtDanhGia.getText());
-            stmt.setString(5,txtMaBan.getText());
+            stmt.setString(5, txtMaBan.getText());
             rs = stmt.executeUpdate();
             if (rs > 0) {
                 JOptionPane.showMessageDialog(this, "Sửa thành công");
@@ -329,28 +334,30 @@ public class QuanLyMonAn extends javax.swing.JFrame {
             }
         } catch (Exception e) {
             System.out.println(e);
-        } 
+        }
     }
-    public void XoaMonAn(){
+
+    public void XoaMonAn() {
         int rs = 0;
         try {
             con = DatabaseHelper.getconnecDb();
             String sql = "delete from MONAN where  MAMON = ?";
             stmt = con.prepareStatement(sql);
-            stmt.setString(1,txtMamon.getText());
-            rs = stmt.executeUpdate(); 
-            if(rs > 0){
+            stmt.setString(1, txtMamon.getText());
+            rs = stmt.executeUpdate();
+            if (rs > 0) {
                 JOptionPane.showMessageDialog(this, "Xóa thành công");
                 LoadDaTaToTabel();
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(this, "Xóa không thành công");
             }
         } catch (Exception e) {
-                System.out.println(e);
-        }       
+            System.out.println(e);
+        }
     }
-    public boolean checkForm(){
-        if(txtMamon.getText().equals("")){
+
+    public boolean checkForm() {
+        if (txtMamon.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Mã món ăn đang bỏ trống");
             return false;
         }
@@ -369,7 +376,7 @@ public class QuanLyMonAn extends javax.swing.JFrame {
         if (txtGia.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Địa chỉ đang bỏ trống");
             return false;
-        }    
+        }
         try {
             Double.parseDouble(txtGia.getText());
         } catch (Exception e) {
