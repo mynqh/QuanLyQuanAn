@@ -1,24 +1,21 @@
-package LienKet;
-
-import Login.DangNhap;
-import quanlyquanan.QuanLyBan;
-import quanlyquanan.QuanLyMonAn;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+package LienKet;
+
+import Login.DangNhap;
 
 /**
  *
  * @author Admin
  */
-public class QLMA_QLBAN extends javax.swing.JFrame {
+public class QLNV_QLHD extends javax.swing.JFrame {
 
     /**
-     * Creates new form QLMA_QLBAN
+     * Creates new form QLNV_QLHD
      */
-    public QLMA_QLBAN() {
+    public QLNV_QLHD() {
         initComponents();
         setLocationRelativeTo(null);
     }
@@ -32,31 +29,31 @@ public class QLMA_QLBAN extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnQLMA = new javax.swing.JButton();
-        btnQLBA = new javax.swing.JButton();
+        btnQLHD = new javax.swing.JButton();
+        btnQLNV = new javax.swing.JButton();
         btnThoat = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnQLMA.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        btnQLMA.setText("Quản lý món ăn ");
-        btnQLMA.addActionListener(new java.awt.event.ActionListener() {
+        btnQLHD.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        btnQLHD.setText("Quản lý hóa đơn ");
+        btnQLHD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnQLMAActionPerformed(evt);
+                btnQLHDActionPerformed(evt);
             }
         });
-        getContentPane().add(btnQLMA, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, -1, -1));
+        getContentPane().add(btnQLHD, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, -1, -1));
 
-        btnQLBA.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        btnQLBA.setText("Quản lý bàn ăn ");
-        btnQLBA.addActionListener(new java.awt.event.ActionListener() {
+        btnQLNV.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        btnQLNV.setText("Quản lý nhân viên ");
+        btnQLNV.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnQLBAActionPerformed(evt);
+                btnQLNVActionPerformed(evt);
             }
         });
-        getContentPane().add(btnQLBA, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 340, 60));
+        getContentPane().add(btnQLNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 380, 60));
 
         btnThoat.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnThoat.setText("Thoát");
@@ -65,29 +62,25 @@ public class QLMA_QLBAN extends javax.swing.JFrame {
                 btnThoatActionPerformed(evt);
             }
         });
-        getContentPane().add(btnThoat, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, -1, -1));
+        getContentPane().add(btnThoat, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/BG_LK.jpg"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 600, 350));
+        jLabel1.setText("jLabel1");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 350));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnQLBAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLBAActionPerformed
-        QuanLyBan main = new QuanLyBan();
-        main.setVisible(true);
-        this.dispose();
-        
-    }//GEN-LAST:event_btnQLBAActionPerformed
+    private void btnQLHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLHDActionPerformed
 
-    private void btnQLMAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLMAActionPerformed
-        QuanLyMonAn main = new QuanLyMonAn();
-        main.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnQLMAActionPerformed
+    }//GEN-LAST:event_btnQLHDActionPerformed
+
+    private void btnQLNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLNVActionPerformed
+
+    }//GEN-LAST:event_btnQLNVActionPerformed
 
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
-       DangNhap main = new DangNhap();
+        DangNhap main = new DangNhap();
         main.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnThoatActionPerformed
@@ -109,27 +102,27 @@ public class QLMA_QLBAN extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(QLMA_QLBAN.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QLNV_QLHD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(QLMA_QLBAN.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QLNV_QLHD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(QLMA_QLBAN.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QLNV_QLHD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(QLMA_QLBAN.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QLNV_QLHD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new QLMA_QLBAN().setVisible(true);
+                new QLNV_QLHD().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnQLBA;
-    private javax.swing.JButton btnQLMA;
+    private javax.swing.JButton btnQLHD;
+    private javax.swing.JButton btnQLNV;
     private javax.swing.JButton btnThoat;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables

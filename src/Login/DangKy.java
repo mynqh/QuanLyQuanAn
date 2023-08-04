@@ -14,11 +14,14 @@ import javax.swing.JOptionPane;
  */
 public class DangKy extends javax.swing.JFrame {
     private static final String P_EMAIL = "^([a-z0-9\\.-]+)@([\\da-z\\.-]+)\\.([a-z.]{2,6})";
+    private static final String P_PASSWORD = "^[0-9]{3}";
     /**
      * Creates new form DangKy
      */
     public DangKy() {
         initComponents();
+        setTitle("Đăng Ký");
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -44,6 +47,7 @@ public class DangKy extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -107,7 +111,7 @@ public class DangKy extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtHotenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHotenActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_txtHotenActionPerformed
 
     private void btnDangKyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangKyActionPerformed
@@ -179,8 +183,13 @@ public class DangKy extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Mật khẩu đang bỏ trống");
             return false;
         }
+        Matcher mc = Pattern.compile(P_PASSWORD).matcher(pass);
+        if (!mc.matches()) {
+            JOptionPane.showMessageDialog(this, "Mật khẩu tối đa 3 số");
+            return false;
+        }
         if(txtSDT.getText().equals("")){
-            JOptionPane.showMessageDialog(this, "Số điện  đang bỏ trống");
+            JOptionPane.showMessageDialog(this, "Số điện thoại đang bỏ trống");
             return false;                
         }
         try {

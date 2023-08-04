@@ -5,19 +5,29 @@
 package Login;
 
 import LienKet.QLMA_QLBAN;
+import LienKet.QLNV_QLHD;
 import javax.swing.JOptionPane;
-import quanlyquanan.QuanLyBan;
-import quanlyquanan.QuanLyMonAn;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.sql.DriverManager;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import model.DatabaseHelper;
+
 
 /**
  *
  * @author Admin
  */
 public class DangNhap extends javax.swing.JFrame {
-    String user1 = "user1";
-    String pass1 = "678";
-    String user2 = "user2";
-    String pass2 = "123";
+//    String user1 = "user1";
+//    String pass1 = "678";
+//    String user2 = "user2";
+//    String pass2 = "123";
+    Connection con = null;
+    Statement st = null;
+    ResultSet rs = null;
     /**
      * Creates new form DangNhap
      */
@@ -46,6 +56,7 @@ public class DangNhap extends javax.swing.JFrame {
         txtEmail = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -59,8 +70,8 @@ public class DangNhap extends javax.swing.JFrame {
 
         jLabel3.setText("Mật khẩu ");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, -1));
-        getContentPane().add(txtTenDN, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, 240, -1));
-        getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, 170, -1));
+        getContentPane().add(txtTenDN, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 260, -1));
+        getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 130, 170, -1));
 
         btnDangNhap.setText("Đăng nhập");
         btnDangNhap.addActionListener(new java.awt.event.ActionListener() {
@@ -68,7 +79,7 @@ public class DangNhap extends javax.swing.JFrame {
                 btnDangNhapActionPerformed(evt);
             }
         });
-        getContentPane().add(btnDangNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 180, -1, -1));
+        getContentPane().add(btnDangNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, -1, -1));
 
         btnThoat.setText("Thoát");
         btnThoat.addActionListener(new java.awt.event.ActionListener() {
@@ -76,39 +87,39 @@ public class DangNhap extends javax.swing.JFrame {
                 btnThoatActionPerformed(evt);
             }
         });
-        getContentPane().add(btnThoat, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 180, -1, -1));
+        getContentPane().add(btnThoat, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 190, -1, -1));
 
         txtEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/DN.jpg"))); // NOI18N
         txtEmail.setText("jLabel4");
-        getContentPane().add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 520, 330));
+        getContentPane().add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 300));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
-        if(checkForm()){
-            String username = txtTenDN.getText();
-            String password = new String(txtPassword.getPassword());
-            if(username.equals(user1) && password.equals(pass1)){
-                JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
-                QuanLyMonAn main = new QuanLyMonAn();
-                main.setVisible(true);
-                this.dispose();
-                return;
-            }
-            else if (username.equals(user2) && password.equals(pass2)) {
-                JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
-                QuanLyBan main = new QuanLyBan();
-                main.setVisible(true);
-                this.dispose();             
-                return;
-            } 
-            else{
-                JOptionPane.showMessageDialog(this, "Đăng nhập thất bại");
-                return;
-            }
- 
-        }
+//        if(checkForm()){
+//            String username = txtTenDN.getText();
+//            String password = new String(txtPassword.getPassword());
+//            if(username.equals(user1) && password.equals(pass1)){
+//                JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
+//                QLMA_QLBAN main = new QLMA_QLBAN();
+//                main.setVisible(true);
+//                this.dispose();
+//                return;
+//            }
+//            else if (username.equals(user2) && password.equals(pass2)) {
+//                JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
+//                QLNV_QLHD main = new QLNV_QLHD();
+//                main.setVisible(true);
+//                this.dispose();             
+//                return;
+//            } 
+//            else{
+//                JOptionPane.showMessageDialog(this, "Đăng nhập thất bại");
+//                return;
+//            }
+//        }
+          DangNhap();
     }//GEN-LAST:event_btnDangNhapActionPerformed
 
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
@@ -166,15 +177,46 @@ public class DangNhap extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Tên đăng nhập đang bỏ trống");
             return false;
         }
-        if (txtEmail.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Email đang bỏ trống");
-            return false;
-        }
         if(passWord.equals("")){
             JOptionPane.showMessageDialog(this, "Mật khẩu đang bỏ trống");
             return false;
         }
-        return true;
-        
+        return true;       
     }
-}
+    public void DangNhap(){
+        try {
+            String username = txtTenDN.getText();
+            String password = new String(txtPassword.getPassword());
+
+            con = DatabaseHelper.getconnecDb();
+            st = con.createStatement();
+            String sql = "Select * from users where username='" + username + "' and password='" + password + "'";
+            rs = st.executeQuery(sql);
+            if (rs.isBeforeFirst() == false) {
+                JOptionPane.showMessageDialog(this, "Tài khoản với mật không đúng");
+            } else {
+                JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
+                boolean admin=false;
+                 while(rs.next())
+                 {
+                        admin  = rs.getBoolean("admin");
+                 }
+                 if(admin)
+                 {
+                     QLMA_QLBAN main = new  QLMA_QLBAN();
+                     main.show();
+                     //admin 678
+                 }else
+                 {
+                     QLNV_QLHD main = new  QLNV_QLHD();
+                     main.show();
+                     //user , 123
+                 }
+                 dispose();
+            }
+            }catch (Exception e) {
+            }    
+        } 
+    }
+        
+
