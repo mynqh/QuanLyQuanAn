@@ -134,16 +134,18 @@ public class QuanLyMonAn extends javax.swing.JFrame {
 
         btnThem.setBackground(new java.awt.Color(204, 255, 255));
         btnThem.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-add-25.png"))); // NOI18N
         btnThem.setText("Thêm ");
         btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnThemActionPerformed(evt);
             }
         });
-        getContentPane().add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 400, -1, 34));
+        getContentPane().add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 400, 100, 34));
 
         btnSua.setBackground(new java.awt.Color(204, 255, 255));
         btnSua.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-update-25.png"))); // NOI18N
         btnSua.setText("Sửa");
         btnSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -154,6 +156,7 @@ public class QuanLyMonAn extends javax.swing.JFrame {
 
         btnXoa.setBackground(new java.awt.Color(204, 255, 255));
         btnXoa.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-delete-25.png"))); // NOI18N
         btnXoa.setText("Xóa");
         btnXoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

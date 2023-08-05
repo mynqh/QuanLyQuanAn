@@ -117,13 +117,14 @@ public class QuanLyHDCT extends javax.swing.JFrame {
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 90, -1, -1));
         getContentPane().add(txtMaHD, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, 260, -1));
 
+        btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-exit-25.png"))); // NOI18N
         btnThoat.setText("Thoát");
         btnThoat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnThoatActionPerformed(evt);
             }
         });
-        getContentPane().add(btnThoat, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 10, -1, -1));
+        getContentPane().add(btnThoat, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, -1, -1));
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/NenChiTiet.jpg"))); // NOI18N
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 570));

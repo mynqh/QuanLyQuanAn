@@ -126,31 +126,34 @@ public class QuanLyNhanVien extends javax.swing.JFrame {
         getContentPane().add(cboCa, new org.netbeans.lib.awtextra.AbsoluteConstraints(158, 355, 141, -1));
 
         btnThem.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-add-25.png"))); // NOI18N
         btnThem.setText("Thêm");
         btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnThemActionPerformed(evt);
             }
         });
-        getContentPane().add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 640, 92, 32));
+        getContentPane().add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 640, 110, 40));
 
         btnSua.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-update-25.png"))); // NOI18N
         btnSua.setText("Sửa ");
         btnSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSuaActionPerformed(evt);
             }
         });
-        getContentPane().add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 640, 80, 32));
+        getContentPane().add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 640, 100, 40));
 
         btnXoa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-delete-25.png"))); // NOI18N
         btnXoa.setText("Xóa");
         btnXoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnXoaActionPerformed(evt);
             }
         });
-        getContentPane().add(btnXoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 640, 82, 32));
+        getContentPane().add(btnXoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(422, 640, 110, 40));
 
         tblNhanVien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

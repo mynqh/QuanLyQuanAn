@@ -150,16 +150,18 @@ public class QuanLyHoaDon extends javax.swing.JFrame {
 
         btnThem.setBackground(new java.awt.Color(204, 255, 204));
         btnThem.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-add-25.png"))); // NOI18N
         btnThem.setText("Thêm ");
         btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnThemActionPerformed(evt);
             }
         });
-        getContentPane().add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 270, 88, -1));
+        getContentPane().add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 270, 100, -1));
 
         btnXoa.setBackground(new java.awt.Color(204, 255, 204));
         btnXoa.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-delete-25.png"))); // NOI18N
         btnXoa.setText("Xóa");
         btnXoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

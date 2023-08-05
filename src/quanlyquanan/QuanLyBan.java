@@ -10,8 +10,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Vector;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.YES_NO_OPTION;
 import javax.swing.table.DefaultTableModel;
 import model.DatabaseHelper;
 
@@ -24,6 +31,8 @@ public class QuanLyBan extends javax.swing.JFrame {
     Connection con = null;
     Statement st = null;
     ResultSet rs = null;
+    //lấy đối tượng ngày tháng năm
+    Calendar cal = Calendar.getInstance();
     String[] cols = {"Mã bàn", "Số lượng", "Trạng thái bàn "};
     DefaultTableModel model = new DefaultTableModel(cols, 0);
     /**
@@ -96,34 +105,37 @@ public class QuanLyBan extends javax.swing.JFrame {
 
         btnThem.setBackground(new java.awt.Color(255, 255, 204));
         btnThem.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-add-25.png"))); // NOI18N
         btnThem.setText("Thêm ");
         btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnThemActionPerformed(evt);
             }
         });
-        getContentPane().add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 320, 85, -1));
+        getContentPane().add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 320, 120, -1));
 
         btnXoa.setBackground(new java.awt.Color(255, 255, 204));
         btnXoa.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-delete-25.png"))); // NOI18N
         btnXoa.setText("Xóa");
         btnXoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnXoaActionPerformed(evt);
             }
         });
-        getContentPane().add(btnXoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 360, 86, -1));
+        getContentPane().add(btnXoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(196, 360, 110, 30));
 
         btnDatBan.setBackground(new java.awt.Color(255, 255, 204));
         btnDatBan.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnDatBan.setForeground(new java.awt.Color(255, 0, 0));
+        btnDatBan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-login-25.png"))); // NOI18N
         btnDatBan.setText("Đặt Bàn");
         btnDatBan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDatBanActionPerformed(evt);
             }
         });
-        getContentPane().add(btnDatBan, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 400, 96, -1));
+        getContentPane().add(btnDatBan, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 400, 110, 30));
 
         tblBan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -151,7 +163,10 @@ public class QuanLyBan extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    SimpleDateFormat dinhDang = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+    Date date = cal.getTime();
+    
+    String formatteDate = dinhDang.format(date);
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
        if(checkForm()){
                    ThemBan();
@@ -169,7 +184,20 @@ public class QuanLyBan extends javax.swing.JFrame {
     }//GEN-LAST:event_tblBanMouseClicked
 
     private void btnDatBanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatBanActionPerformed
+        String trangThai = txtTrangThai.getText();
 
+        if (trangThai.equalsIgnoreCase("Dang trong")) {
+            int ret = JOptionPane.showConfirmDialog(this, "Bạn có muốn xác nhân đặt bàn", "Thông tin đặt bàn",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (ret == JOptionPane.YES_OPTION) {
+                Datban();
+                return;
+            } else {
+                JOptionPane.showMessageDialog(this, "Đặt bàn không thành công");
+            }
+        }else{
+             JOptionPane.showMessageDialog(this, "Bàn đã đặt hoặc đang hoạt động ");
+        }
     }//GEN-LAST:event_btnDatBanActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -343,5 +371,22 @@ public class QuanLyBan extends javax.swing.JFrame {
             return false;
         }       
         return true;
+        }
+        public void Datban(){
+            String thongtin = JOptionPane.showInputDialog(this, "Họ tên: "
+                    +"Số điện thoại");
+            if (thongtin != null) {
+                StringBuilder tt = new StringBuilder();
+                tt.append("Thông tin cơ bản: "+thongtin);
+                tt.append("\nMã bàn: " + txtMaBan.getText());
+                tt.append("\nTrạng thái: " + txtTrangThai.getText());
+                tt.append("\nGiờ đặt bàn:" + formatteDate);
+                if (tt.length() > 0) {
+                    JOptionPane.showMessageDialog(this, tt.toString());
+                }
+                JOptionPane.showMessageDialog(this, "Đặt bàn thành công");
+            }
+        }
     }
-}
+    
+
